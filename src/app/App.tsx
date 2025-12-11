@@ -1,5 +1,5 @@
 import { OutputVariants } from '@/widgets/outputVariants';
-import { Typography, Container } from '@mui/material';
+import { Typography, Container, Stack } from '@mui/material';
 
 function App() {
   return (
