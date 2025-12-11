@@ -25,6 +25,6 @@
 		"jsx": "react-jsx"
 	},
 
-	"include": ["src", "vite.config.ts"],
+	"include": ["src", "vite.config.ts", "src/shared/ui/MyTabs/.tsx"],
 	"exclude": ["node_modules"]
 }

@@ -1,13 +1,18 @@
-import { Typography, Container, Box } from '@mui/material';
+import { OutputVariants } from '@/widgets/outputVariants';
+import { Typography, Container } from '@mui/material';
 
 function App() {
   return (
     <Container maxWidth="sm">
-      <Box sx={{ my: 4 }}>
-        <Typography variant="h2" component="h1" gutterBottom>
-          The quick brown fox jumps over the lazy dog
-        </Typography>
-      </Box>
+      <OutputVariants />
+
+      <Typography variant="h3" component="h3">
+        Объемы
+      </Typography>
+
+      <Typography variant="h3" component="h3">
+        Реквизиты
+      </Typography>
     </Container>
   );
 }

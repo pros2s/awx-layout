@@ -1,0 +1,8 @@
+.tabs {
+  margin-top: 16px;
+}
+
+.tab.tab {
+  padding: 12px 15px;
+  border-radius: 15px;
+}
