@@ -3,8 +3,7 @@ import SFProTextTTF from '@/shared/assets/fonts/SFProText-Regular.ttf';
 export const muiCssBaseline = {
   styleOverrides: {
     body: {
-      backgroundColor: '#ededed',
-      padding: '20px 0',
+      backgroundColor: 'var(--bg)',
     },
 
     '@font-face': {

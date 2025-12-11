@@ -1,0 +1,1 @@
+export { TitledTabs } from './TitledTabs';

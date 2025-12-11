@@ -3,15 +3,15 @@ import { Stack, Typography } from '@mui/material';
 import { MyTabs } from '@/shared/ui/MyTabs';
 
 import { tabs } from './config/tabs';
-import cls from './OutputVariants.module.css';
+import cls from './TitledTabs.module.css';
 
-interface OutputVariantsPropsType {
+interface TitledTabsPropsType {
   title?: string;
 }
 
-export const OutputVariants = ({ title = 'Способ вывода' }: OutputVariantsPropsType) => {
+export const TitledTabs = ({ title = 'Способ вывода' }: TitledTabsPropsType) => {
   return (
-    <Stack direction="column" gap={2}>
+    <Stack spacing={2} component="section" sx={{ mt: 2.5 }}>
       <Typography variant="h3" component="h3">
         {title}
       </Typography>

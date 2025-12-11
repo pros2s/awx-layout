@@ -1,5 +1,13 @@
-html,
-body,
-#root {
-  height: 100%;
+@import './vars/themes/light.css';
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  margin: 0; /* Ensures no extra space is left */
+  appearance: none;
+}
+
+/* Firefox */
+input[type='number'] {
+  appearance: textfield;
 }

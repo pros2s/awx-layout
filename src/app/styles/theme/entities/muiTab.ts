@@ -6,16 +6,16 @@ export const muiTab = {
   styleOverrides: {
     root: {
       textTransform: 'none',
-      background: '#fff',
-      color: '#000',
+      background: 'var(--bg-primary)',
+      color: 'var(--color-primary)',
 
       minHeight: 'fit-content',
       height: 'fit-content',
       minWidth: 'fit-content',
 
       '&.Mui-selected': {
-        color: '#fff',
-        backgroundColor: '#000',
+        backgroundColor: 'var(--bg-secondary)',
+        color: 'var(--color-secondary)',
       },
     },
   },

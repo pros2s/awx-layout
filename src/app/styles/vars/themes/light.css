@@ -1,0 +1,9 @@
+.light {
+  --bg: #ededed;
+  --bg-primary: #fff;
+  --bg-secondary: #000;
+  --bg-interactive: #efefef;
+  --color-primary: #000;
+  --color-secondary: #fff;
+  --color-placeholder: #a7a7a7;
+}

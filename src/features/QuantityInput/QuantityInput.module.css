@@ -1,0 +1,33 @@
+.title {
+  font-size: 0.95rem;
+  color: var(--color-placeholder);
+}
+
+.card {
+  padding: 10px;
+  border-radius: 12px;
+  background: var(--bg-primary);
+}
+
+.label.label {
+  font-size: 0.85rem;
+  color: var(--color-placeholder);
+}
+
+.input {
+  input {
+    overflow: hidden;
+    font-weight: 600;
+    text-align: center;
+    text-overflow: ellipsis;
+  }
+}
+
+.button.button {
+  padding: 5px;
+  background-color: var(--bg-interactive);
+
+  path {
+    fill: var(--bg-secondary);
+  }
+}
