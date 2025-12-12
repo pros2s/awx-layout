@@ -1,8 +1,4 @@
 export const muiTab = {
-  defaultProps: {
-    disableRipple: true,
-  },
-
   styleOverrides: {
     root: {
       textTransform: 'none',

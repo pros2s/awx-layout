@@ -6,25 +6,15 @@ import { muiTabs } from './entities/muiTabs';
 import { muiTab } from './entities/muiTab';
 import { muiStack } from './entities/muiStack';
 import { muiInput } from './entities/muiInput';
-import { muiIconButton } from './entities/muiIconButton';
 import { muiCheckbox } from './entities/checkbox/muiCheckbox';
 import { muiFormControlLabel } from './entities/muiFormControlLabel';
-
-type BreakpointValueType = 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+import { muiRadio } from './entities/radio/muiRadio';
+import { MuiButtonBase } from './entities/muiButtonBase';
+import { breakpoints } from './entities/breakpoints';
 
 export const theme = createTheme({
   typography,
-
-  breakpoints: {
-    values: {
-      xxs: 0,
-      xs: 484,
-      sm: 600,
-      md: 900,
-      lg: 1200,
-      xl: 1536,
-    } as Record<BreakpointValueType, number>,
-  },
+  breakpoints,
 
   components: {
     MuiCssBaseline: muiCssBaseline,
@@ -32,8 +22,9 @@ export const theme = createTheme({
     MuiTabs: muiTabs,
     MuiTab: muiTab,
     MuiInput: muiInput,
-    MuiIconButton: muiIconButton,
     MuiCheckbox: muiCheckbox,
     MuiFormControlLabel: muiFormControlLabel,
+    MuiRadio: muiRadio,
+    MuiButtonBase: MuiButtonBase,
   },
 });

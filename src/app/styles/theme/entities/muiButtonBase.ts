@@ -1,4 +1,4 @@
-export const muiIconButton = {
+export const MuiButtonBase = {
   defaultProps: {
     disableRipple: true,
   },

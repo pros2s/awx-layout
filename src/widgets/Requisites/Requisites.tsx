@@ -22,7 +22,7 @@ export const Requisites = ({ title = 'Реквизиты' }: RequisitesPropsType
           className={cls.label}
           label="Сохранить реквизиты"
           labelPlacement="start"
-          control={<Checkbox />}
+          control={<Checkbox defaultChecked />}
         />
       </Stack>
 
