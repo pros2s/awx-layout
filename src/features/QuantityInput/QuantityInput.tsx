@@ -21,7 +21,17 @@ export const QuantityInput = ({
   className,
 }: QuantityInputPropsType) => {
   return (
-    <Stack className={className} spacing={1}>
+    <Stack
+      className={className}
+      spacing={1}
+      sx={{
+        maxWidth: {
+          xxs: 'none',
+          xs: '220px',
+          sm: '212px',
+        },
+      }}
+    >
       <Typography
         className={cls.title}
         sx={{

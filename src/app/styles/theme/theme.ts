@@ -7,7 +7,8 @@ import { muiTab } from './entities/muiTab';
 import { muiStack } from './entities/muiStack';
 import { muiInput } from './entities/muiInput';
 import { muiIconButton } from './entities/muiIconButton';
-import { Theme } from '@mui/material/styles';
+import { muiCheckbox } from './entities/checkbox/muiCheckbox';
+import { muiFormControlLabel } from './entities/muiFormControlLabel';
 
 type BreakpointValueType = 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
@@ -32,5 +33,7 @@ export const theme = createTheme({
     MuiTab: muiTab,
     MuiInput: muiInput,
     MuiIconButton: muiIconButton,
+    MuiCheckbox: muiCheckbox,
+    MuiFormControlLabel: muiFormControlLabel,
   },
 });

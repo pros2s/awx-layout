@@ -2,16 +2,14 @@ import { Typography, Container } from '@mui/material';
 
 import { TitledTabs } from '@/widgets/TitledTabs';
 import { Volumes } from '@/widgets/Volumes';
+import { Requisites } from '@/widgets/Requisites';
 
 function App() {
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="xs">
       <TitledTabs />
       <Volumes />
-
-      <Typography variant="h3" component="h3">
-        Реквизиты
-      </Typography>
+      <Requisites />
     </Container>
   );
 }
