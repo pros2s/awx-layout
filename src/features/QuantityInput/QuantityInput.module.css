@@ -17,6 +17,10 @@
 .input {
   width: 100%;
 
+  fieldset {
+    display: none;
+  }
+
   input {
     overflow: hidden;
     font-weight: 600;
