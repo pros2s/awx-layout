@@ -12,4 +12,14 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src/'),
     },
   },
+
+  server: {
+    proxy: {
+      '/b2api': {
+        target: 'https://awx.pro',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
 });
