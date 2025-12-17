@@ -1,18 +1,17 @@
-import { Stack, IconButton, Input, Typography, TextField } from '@mui/material';
+import { ChangeEvent } from 'react';
+import { Stack, IconButton, Typography, TextField } from '@mui/material';
 
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 
 import cls from './QuantityInput.module.css';
-import { ChangeEvent, useState } from 'react';
-import { useQuantityChange } from '@/features/QuantityInput/hooks/useQuantityChange';
 
 interface QuantityInputPropsType {
   title: string;
   label: string;
   onChange: (num: number) => void;
-  onRemove: () => void;
-  onAdd: () => void;
+  onRemove: (num: number) => void;
+  onAdd: (num: number) => void;
   value: number;
   min?: number;
   step?: number;
@@ -34,7 +33,27 @@ export const QuantityInput = ({
   onRemove,
   className,
 }: QuantityInputPropsType) => {
-  const handleChange = useQuantityChange({ onChange, max, min });
+  const round = String(step).split('.')[1]?.length;
+
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    const value = Number(e.target.value);
+
+    if (!Number.isNaN(value) && value <= max && value >= min) {
+      onChange(value);
+    }
+  };
+
+  const handleRemove = () => {
+    if (value >= min + step) {
+      onRemove(Number((value - step).toFixed(round)));
+    }
+  };
+
+  const handleAdd = () => {
+    if (value <= max - step) {
+      onAdd(Number((value + step).toFixed(round)));
+    }
+  };
 
   return (
     <Stack
@@ -66,7 +85,7 @@ export const QuantityInput = ({
         </Typography>
 
         <Stack direction="row" alignItems="center" spacing={0.5}>
-          <IconButton className={cls.button} aria-label="уменьшить" size="small" onClick={onRemove}>
+          <IconButton className={cls.button} aria-label="уменьшить" size="small" onClick={handleRemove}>
             <RemoveIcon fontSize="small" />
           </IconButton>
 
@@ -80,7 +99,7 @@ export const QuantityInput = ({
             type="number"
           />
 
-          <IconButton className={cls.button} aria-label="увеличить" size="small" onClick={onAdd}>
+          <IconButton className={cls.button} aria-label="увеличить" size="small" onClick={handleAdd}>
             <AddIcon fontSize="small" />
           </IconButton>
         </Stack>

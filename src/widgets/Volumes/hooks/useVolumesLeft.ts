@@ -1,27 +1,23 @@
-import { useState } from 'react';
+import { useDebounce } from '@/shared/hooks/useDebounce';
 
-import { quantitiesData } from '../config/quantitiesData';
+import { useGetVolumesData } from './data/useGetVolumesData';
 
-const { min, max, step } = quantitiesData.eth;
+import { GET_DATA_DELAY } from '../config/debounce';
+import { VolumeSetStateType } from '../types/VolumesTypes';
 
-export const useVolumesLeft = () => {
-  const [leftValue, setLeftValue] = useState(min);
+export const useVolumesLeft = (setLeftValue: VolumeSetStateType, setRightValue: VolumeSetStateType) => {
+  const getData = useGetVolumesData();
 
-  const handleLeftChange = (val: number) => {
+  const handleUpdate = (val: number) => {
+    getData({ inAmount: val }).then((data) => {
+      setRightValue(Number(data.outAmount));
+    });
+  };
+
+  const debouncedGetData = useDebounce(handleUpdate, GET_DATA_DELAY);
+
+  return (val: number) => {
     setLeftValue(val);
+    debouncedGetData(val);
   };
-
-  const handleLeftRemove = () => {
-    if (leftValue >= min + step) {
-      setLeftValue((val) => val - step);
-    }
-  };
-
-  const handleLeftAdd = () => {
-    if (leftValue <= max - step) {
-      setLeftValue((val) => val + step);
-    }
-  };
-
-  return { leftValue, handleLeftRemove, handleLeftAdd, handleLeftChange };
 };

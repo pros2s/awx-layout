@@ -1,7 +1,10 @@
-import { QuantityInput } from '@/features/QuantityInput';
+import { useState } from 'react';
+
 import { Stack, Typography } from '@mui/material';
 
-import { useVolumesData } from './hooks/useVolumesData';
+import { QuantityInput } from '@/features/QuantityInput';
+
+import { useInitVolumesData } from './hooks/data/useInitVolumesData';
 import { useVolumesLeft } from './hooks/useVolumesLeft';
 import { useVolumesRight } from './hooks/useVolumesRight';
 
@@ -15,10 +18,13 @@ interface VolumesPropsType {
 }
 
 export const Volumes = ({ title = 'Объемы' }: VolumesPropsType) => {
-  const { handleLeftAdd, handleLeftChange, handleLeftRemove, leftValue } = useVolumesLeft();
-  const { handleRightAdd, handleRightChange, handleRightRemove, rightValue } = useVolumesRight({ max: 10, min: 0 });
+  const [leftValue, setLeftValue] = useState(quantitiesData.eth.min);
+  const [rightValue, setRightValue] = useState(0);
 
-  useVolumesData(rightValue);
+  const [minRight, maxRight] = useInitVolumesData(setRightValue);
+
+  const handleLeftChange = useVolumesLeft(setLeftValue, setRightValue);
+  const handleRightChange = useVolumesRight(setRightValue, setLeftValue);
 
   return (
     <Stack spacing={2} component="section" sx={{ mt: 2.5 }}>
@@ -31,13 +37,13 @@ export const Volumes = ({ title = 'Объемы' }: VolumesPropsType) => {
           className={cls.input}
           title={eth.title}
           label={eth.label}
-          max={eth.max}
-          min={eth.min}
           step={eth.step}
-          onAdd={handleLeftAdd}
-          onChange={handleLeftChange}
-          onRemove={handleLeftRemove}
+          min={eth.min}
+          max={eth.max}
           value={leftValue}
+          onRemove={handleLeftChange}
+          onAdd={handleLeftChange}
+          onChange={handleLeftChange}
         />
 
         <QuantityInput
@@ -45,11 +51,13 @@ export const Volumes = ({ title = 'Объемы' }: VolumesPropsType) => {
           title={rub.title}
           label={rub.label}
           step={rub.step}
-          titleAlign="right"
-          onAdd={handleRightAdd}
-          onChange={handleRightChange}
-          onRemove={handleRightRemove}
+          min={minRight}
+          max={maxRight}
           value={rightValue}
+          onRemove={handleRightChange}
+          onAdd={handleRightChange}
+          onChange={handleRightChange}
+          titleAlign="right"
         />
       </Stack>
     </Stack>

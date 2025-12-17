@@ -1,32 +1,23 @@
-import { useState } from 'react';
+import { useDebounce } from '@/shared/hooks/useDebounce';
 
-import { quantitiesData } from '../config/quantitiesData';
-const { step } = quantitiesData.rub;
-const round = String(step).split('.')[1].length;
+import { useGetVolumesData } from './data/useGetVolumesData';
 
-interface VolumesRightArgsType {
-  min: number;
-  max: number;
-}
+import { GET_DATA_DELAY } from '../config/debounce';
+import { VolumeSetStateType } from '../types/VolumesTypes';
 
-export const useVolumesRight = ({ max, min }: VolumesRightArgsType) => {
-  const [rightValue, setRightValue] = useState(min);
+export const useVolumesRight = (setRightValue: VolumeSetStateType, setLeftValue: VolumeSetStateType) => {
+  const getData = useGetVolumesData();
 
-  const handleRightChange = (val: number) => {
+  const handleUpdate = (val: number) => {
+    getData({ outAmount: val }).then((data) => {
+      setLeftValue(Number(data.inAmount));
+    });
+  };
+
+  const debouncedGetData = useDebounce(handleUpdate, GET_DATA_DELAY);
+
+  return (val: number) => {
     setRightValue(val);
+    debouncedGetData(val);
   };
-
-  const handleRightRemove = () => {
-    if (rightValue >= min + step) {
-      setRightValue((val) => Number((val - step).toFixed(round)));
-    }
-  };
-
-  const handleRightAdd = () => {
-    if (rightValue <= max - step) {
-      setRightValue((val) => Number((val + step).toFixed(round)));
-    }
-  };
-
-  return { rightValue, handleRightRemove, handleRightAdd, handleRightChange };
 };
