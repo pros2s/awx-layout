@@ -21,10 +21,10 @@ export const Volumes = ({ title = 'Объемы' }: VolumesPropsType) => {
   const [leftValue, setLeftValue] = useState(quantitiesData.eth.min);
   const [rightValue, setRightValue] = useState(0);
 
-  const [minRight, maxRight] = useInitVolumesData(setRightValue);
+  const { isInitLoading, minmaxRight } = useInitVolumesData(setRightValue);
 
-  const handleLeftChange = useVolumesLeft(setLeftValue, setRightValue);
-  const handleRightChange = useVolumesRight(setRightValue, setLeftValue);
+  const { handleLeftChange, isRightLoading } = useVolumesLeft(setLeftValue, setRightValue);
+  const { handleRightChange, isLeftLoading } = useVolumesRight(setRightValue, setLeftValue);
 
   return (
     <Stack spacing={2} component="section" sx={{ mt: 2.5 }}>
@@ -44,6 +44,7 @@ export const Volumes = ({ title = 'Объемы' }: VolumesPropsType) => {
           onRemove={handleLeftChange}
           onAdd={handleLeftChange}
           onChange={handleLeftChange}
+          isLoading={isLeftLoading}
         />
 
         <QuantityInput
@@ -51,13 +52,14 @@ export const Volumes = ({ title = 'Объемы' }: VolumesPropsType) => {
           title={rub.title}
           label={rub.label}
           step={rub.step}
-          min={minRight}
-          max={maxRight}
+          min={minmaxRight[0]}
+          max={minmaxRight[1]}
           value={rightValue}
           onRemove={handleRightChange}
           onAdd={handleRightChange}
           onChange={handleRightChange}
           titleAlign="right"
+          isLoading={isInitLoading || isRightLoading}
         />
       </Stack>
     </Stack>

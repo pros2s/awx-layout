@@ -7,20 +7,23 @@ import { VolumeSetStateType } from '../../types/VolumesTypes';
 
 export const useInitVolumesData = (setRightValue: VolumeSetStateType) => {
   const [minmaxRight, setMinmaxRight] = useState<number[]>([]);
+  const [isInitLoading, setIsInitLoading] = useState(true);
 
   const getData = useGetVolumesData();
 
   useEffect(() => {
-    getData({ inAmount: quantitiesData.eth.min }).then((data) => {
-      const newRightValue = Number(data.outAmount);
+    getData({ inAmount: quantitiesData.eth.min })
+      .then((data) => {
+        const newRightValue = Number(data.outAmount);
 
-      const newMin = Math.min(Number(data.price[0]) * quantitiesData.eth.min, newRightValue);
-      const newMax = Math.max(Number(data.price[0]) * quantitiesData.eth.max, newRightValue);
+        const newMin = Math.min(Number(data.price[0]) * quantitiesData.eth.min, newRightValue);
+        const newMax = Math.max(Number(data.price[0]) * quantitiesData.eth.max, newRightValue);
 
-      setMinmaxRight([newMin, newMax]);
-      setRightValue(newRightValue);
-    });
+        setMinmaxRight([newMin, newMax]);
+        setRightValue(newRightValue);
+      })
+      .finally(() => setIsInitLoading(false));
   }, [getData]);
 
-  return minmaxRight;
+  return { minmaxRight, isInitLoading };
 };

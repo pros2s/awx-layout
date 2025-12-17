@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react';
-import { Stack, IconButton, Typography, TextField } from '@mui/material';
+import { Stack, IconButton, Typography, TextField, CircularProgress } from '@mui/material';
 
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
@@ -17,6 +17,7 @@ interface QuantityInputPropsType {
   step?: number;
   max?: number;
   titleAlign?: 'left' | 'right';
+  isLoading?: boolean;
   className?: string;
 }
 
@@ -31,11 +32,14 @@ export const QuantityInput = ({
   onChange,
   onAdd,
   onRemove,
+  isLoading = false,
   className,
 }: QuantityInputPropsType) => {
   const round = String(step).split('.')[1]?.length;
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    if (isLoading) return;
+
     const value = Number(e.target.value);
 
     if (!Number.isNaN(value) && value <= max && value >= min) {
@@ -44,12 +48,16 @@ export const QuantityInput = ({
   };
 
   const handleRemove = () => {
+    if (isLoading) return;
+
     if (value >= min + step) {
       onRemove(Number((value - step).toFixed(round)));
     }
   };
 
   const handleAdd = () => {
+    if (isLoading) return;
+
     if (value <= max - step) {
       onAdd(Number((value + step).toFixed(round)));
     }
@@ -67,24 +75,35 @@ export const QuantityInput = ({
         },
       }}
     >
-      <Typography
-        className={cls.title}
+      <Stack
+        direction="row"
+        alignItems="center"
+        gap={2}
         sx={{
-          textAlign: {
+          justifyContent: {
             xxs: 'left',
             xs: titleAlign === 'right' ? 'right' : 'left',
           },
         }}
       >
-        {title}
-      </Typography>
+        {titleAlign === 'right' && isLoading && <CircularProgress size="1rem" />}
+
+        <Typography className={cls.title}>{title}</Typography>
+
+        {titleAlign === 'left' && isLoading && <CircularProgress size="1rem" />}
+      </Stack>
 
       <Stack className={cls.card} spacing={0.5}>
         <Typography className={cls.label} align="center">
           {label}
         </Typography>
 
-        <Stack direction="row" alignItems="center" spacing={0.5}>
+        <Stack
+          className={cls.field + ` ${isLoading ? cls.loading : ''}`}
+          direction="row"
+          alignItems="center"
+          spacing={0.5}
+        >
           <IconButton className={cls.button} aria-label="уменьшить" size="small" onClick={handleRemove}>
             <RemoveIcon fontSize="small" />
           </IconButton>
