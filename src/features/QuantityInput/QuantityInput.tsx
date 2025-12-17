@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, memo } from 'react';
 import { Stack, IconButton, Typography, TextField, CircularProgress } from '@mui/material';
 
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -21,108 +21,110 @@ interface QuantityInputPropsType {
   className?: string;
 }
 
-export const QuantityInput = ({
-  label,
-  title,
-  value,
-  titleAlign = 'left',
-  min = 0,
-  max = 100,
-  step = 1,
-  onChange,
-  onAdd,
-  onRemove,
-  isLoading = false,
-  className,
-}: QuantityInputPropsType) => {
-  const round = String(step).split('.')[1]?.length;
+export const QuantityInput = memo(
+  ({
+    label,
+    title,
+    value,
+    titleAlign = 'left',
+    min = 0,
+    max = 100,
+    step = 1,
+    onChange,
+    onAdd,
+    onRemove,
+    isLoading = false,
+    className,
+  }: QuantityInputPropsType) => {
+    const round = String(step).split('.')[1]?.length;
 
-  const handleChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    if (isLoading) return;
+    const handleChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+      if (isLoading) return;
 
-    const value = Number(e.target.value);
+      const value = Number(e.target.value);
 
-    if (!Number.isNaN(value) && value <= max && value >= min) {
-      onChange(value);
-    }
-  };
+      if (!Number.isNaN(value) && value <= max && value >= min) {
+        onChange(value);
+      }
+    };
 
-  const handleRemove = () => {
-    if (isLoading) return;
+    const handleRemove = () => {
+      if (isLoading) return;
 
-    if (value >= min + step) {
-      onRemove(Number((value - step).toFixed(round)));
-    }
-  };
+      if (value >= min + step) {
+        onRemove(Number((value - step).toFixed(round)));
+      }
+    };
 
-  const handleAdd = () => {
-    if (isLoading) return;
+    const handleAdd = () => {
+      if (isLoading) return;
 
-    if (value <= max - step) {
-      onAdd(Number((value + step).toFixed(round)));
-    }
-  };
+      if (value <= max - step) {
+        onAdd(Number((value + step).toFixed(round)));
+      }
+    };
 
-  return (
-    <Stack
-      className={className}
-      spacing={1}
-      sx={{
-        maxWidth: {
-          xxs: 'none',
-          xs: '220px',
-          sm: '212px',
-        },
-      }}
-    >
+    return (
       <Stack
-        direction="row"
-        alignItems="center"
-        gap={2}
+        className={className}
+        spacing={1}
         sx={{
-          justifyContent: {
-            xxs: 'left',
-            xs: titleAlign === 'right' ? 'right' : 'left',
+          maxWidth: {
+            xxs: 'none',
+            xs: '220px',
+            sm: '212px',
           },
         }}
       >
-        {titleAlign === 'right' && isLoading && <CircularProgress size="1rem" />}
-
-        <Typography className={cls.title}>{title}</Typography>
-
-        {titleAlign === 'left' && isLoading && <CircularProgress size="1rem" />}
-      </Stack>
-
-      <Stack className={cls.card} spacing={0.5}>
-        <Typography className={cls.label} align="center">
-          {label}
-        </Typography>
-
         <Stack
-          className={cls.field + ` ${isLoading ? cls.loading : ''}`}
           direction="row"
           alignItems="center"
-          spacing={0.5}
+          gap={2}
+          sx={{
+            justifyContent: {
+              xxs: 'left',
+              xs: titleAlign === 'right' ? 'right' : 'left',
+            },
+          }}
         >
-          <IconButton className={cls.button} aria-label="уменьшить" size="small" onClick={handleRemove}>
-            <RemoveIcon fontSize="small" />
-          </IconButton>
+          {titleAlign === 'right' && isLoading && <CircularProgress size="1rem" />}
 
-          <TextField
-            className={cls.input}
-            value={value}
-            slotProps={{ htmlInput: { min, max, step } }}
-            onChange={(val) => handleChange(val)}
-            name="give-lot"
-            size="small"
-            type="number"
-          />
+          <Typography className={cls.title}>{title}</Typography>
 
-          <IconButton className={cls.button} aria-label="увеличить" size="small" onClick={handleAdd}>
-            <AddIcon fontSize="small" />
-          </IconButton>
+          {titleAlign === 'left' && isLoading && <CircularProgress size="1rem" />}
+        </Stack>
+
+        <Stack className={cls.card} spacing={0.5}>
+          <Typography className={cls.label} align="center">
+            {label}
+          </Typography>
+
+          <Stack
+            className={cls.field + ` ${isLoading ? cls.loading : ''}`}
+            direction="row"
+            alignItems="center"
+            spacing={0.5}
+          >
+            <IconButton className={cls.button} aria-label="уменьшить" size="small" onClick={handleRemove}>
+              <RemoveIcon fontSize="small" />
+            </IconButton>
+
+            <TextField
+              className={cls.input}
+              value={value}
+              slotProps={{ htmlInput: { min, max, step } }}
+              onChange={(val) => handleChange(val)}
+              name="give-lot"
+              size="small"
+              type="number"
+            />
+
+            <IconButton className={cls.button} aria-label="увеличить" size="small" onClick={handleAdd}>
+              <AddIcon fontSize="small" />
+            </IconButton>
+          </Stack>
         </Stack>
       </Stack>
-    </Stack>
-  );
-};
+    );
+  },
+);

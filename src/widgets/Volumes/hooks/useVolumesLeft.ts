@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { useDebounce } from '@/shared/hooks/useDebounce';
 
@@ -24,10 +24,13 @@ export const useVolumesLeft = (setLeftValue: VolumeSetStateType, setRightValue: 
 
   const debouncedGetData = useDebounce(handleUpdate, GET_DATA_DELAY);
 
-  const handleLeftChange = (val: number) => {
-    setLeftValue(val);
-    debouncedGetData(val);
-  };
+  const handleLeftChange = useCallback(
+    (val: number) => {
+      setLeftValue(val);
+      debouncedGetData(val);
+    },
+    [setLeftValue, debouncedGetData],
+  );
 
   return { handleLeftChange, isRightLoading };
 };
